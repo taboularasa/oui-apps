@@ -1,0 +1,30 @@
+{
+  "name": "@oui/resource-patterns",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b --pretty false",
+    "test": "vitest run",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@oui/core": "workspace:*",
+    "@oui/data": "workspace:*",
+    "@oui/react-aria": "workspace:*",
+    "@tanstack/react-virtual": "3.14.9"
+  },
+  "peerDependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "vitest": "4.1.10"
+  }
+}

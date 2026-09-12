@@ -1,0 +1,7 @@
+[
+  {
+    "op": "replace",
+    "path": "/resources/resource:item/fields/field:item.title/validation/1/parameters/minimum",
+    "value": -1
+  }
+]

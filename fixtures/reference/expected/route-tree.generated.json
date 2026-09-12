@@ -1,0 +1,30 @@
+{
+  "application": "application:reference",
+  "irVersion": "1.0.0",
+  "routes": [
+    {
+      "id": "route:items",
+      "parent": null,
+      "path": "/items",
+      "interaction": "interaction:item-collection"
+    },
+    {
+      "id": "route:item-detail",
+      "parent": "route:items",
+      "path": "/items/{itemId}",
+      "interaction": "interaction:item-detail"
+    },
+    {
+      "id": "route:item-edit",
+      "parent": "route:item-detail",
+      "path": "/items/{itemId}/edit",
+      "interaction": "interaction:item-edit"
+    },
+    {
+      "id": "route:proposal-decision",
+      "parent": null,
+      "path": "/proposals/{proposalId}/decision",
+      "interaction": "interaction:proposal-decision"
+    }
+  ]
+}

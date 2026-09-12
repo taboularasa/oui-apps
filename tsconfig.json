@@ -1,0 +1,19 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/data" },
+    { "path": "./packages/decision-patterns" },
+    { "path": "./packages/forms" },
+    { "path": "./packages/react" },
+    { "path": "./packages/react-aria" },
+    { "path": "./packages/resource-patterns" },
+    { "path": "./packages/patterns" },
+    { "path": "./packages/router" },
+    { "path": "./packages/theme-default" },
+    { "path": "./apps/reference" },
+    { "path": "./apps/encounter" },
+    { "path": "./apps/obligation" },
+    { "path": "./apps/professional-services" }
+  ]
+}

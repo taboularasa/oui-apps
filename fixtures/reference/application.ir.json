@@ -1,0 +1,1126 @@
+{
+  "id": "application:reference",
+  "irVersion": "1.0.0",
+  "requiredCapabilities": [
+    {
+      "id": "interaction.collection",
+      "minimumVersion": "1.0.0"
+    },
+    {
+      "id": "interaction.detail",
+      "minimumVersion": "1.0.0"
+    },
+    {
+      "id": "interaction.form",
+      "minimumVersion": "1.0.0"
+    },
+    {
+      "id": "interaction.decision",
+      "minimumVersion": "1.0.0"
+    },
+    {
+      "id": "transport.connect.unary",
+      "minimumVersion": "1.0.0"
+    },
+    {
+      "id": "presentation.theme.semantic-tokens",
+      "minimumVersion": "1.0.0"
+    }
+  ],
+  "metadata": {
+    "name": {
+      "id": "application.reference.name",
+      "fallback": "Reference workspace"
+    },
+    "shortName": {
+      "id": "application.reference.shortName",
+      "fallback": "Reference"
+    },
+    "description": {
+      "id": "application.reference.description",
+      "fallback": "A domain-neutral application used to verify OUI."
+    },
+    "defaultLocale": "en-US",
+    "supportedLocales": ["en-US"],
+    "defaultTimeZone": "UTC"
+  },
+  "routes": {
+    "route:items": {
+      "id": "route:items",
+      "path": "/items",
+      "interaction": "interaction:item-collection",
+      "pathParameters": [],
+      "searchParameters": [
+        {
+          "id": "search:query",
+          "valueType": "text",
+          "defaultValue": ""
+        },
+        {
+          "id": "search:status",
+          "valueType": "enum",
+          "cardinality": {
+            "minimum": 0,
+            "maximum": null
+          }
+        },
+        {
+          "id": "search:page",
+          "valueType": "text",
+          "defaultValue": ""
+        },
+        {
+          "id": "search:sort",
+          "valueType": "text",
+          "defaultValue": "title"
+        },
+        {
+          "id": "search:direction",
+          "valueType": "enum",
+          "valueTypeParameters": {
+            "values": ["ascending", "descending"]
+          },
+          "defaultValue": "ascending"
+        }
+      ],
+      "unknownSearchParameters": "discard"
+    },
+    "route:item-detail": {
+      "id": "route:item-detail",
+      "path": "/items/{itemId}",
+      "parent": "route:items",
+      "interaction": "interaction:item-detail",
+      "pathParameters": [
+        {
+          "id": "path:itemId",
+          "placeholder": "itemId",
+          "valueType": "identifier"
+        }
+      ],
+      "searchParameters": [],
+      "unknownSearchParameters": "discard"
+    },
+    "route:item-edit": {
+      "id": "route:item-edit",
+      "path": "/items/{itemId}/edit",
+      "parent": "route:item-detail",
+      "interaction": "interaction:item-edit",
+      "pathParameters": [
+        {
+          "id": "path:itemId",
+          "placeholder": "itemId",
+          "valueType": "identifier"
+        }
+      ],
+      "searchParameters": [],
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:item.update"
+      },
+      "unknownSearchParameters": "reject"
+    },
+    "route:proposal-decision": {
+      "id": "route:proposal-decision",
+      "path": "/proposals/{proposalId}/decision",
+      "interaction": "interaction:proposal-decision",
+      "pathParameters": [
+        {
+          "id": "path:proposalId",
+          "placeholder": "proposalId",
+          "valueType": "identifier"
+        }
+      ],
+      "searchParameters": [],
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:proposal.decide"
+      },
+      "unknownSearchParameters": "reject"
+    }
+  },
+  "navigation": {
+    "landmarkLabel": {
+      "id": "navigation.primary.label",
+      "fallback": "Primary"
+    },
+    "items": [
+      {
+        "id": "navigation:items",
+        "label": {
+          "id": "navigation.items.label",
+          "fallback": "Items"
+        },
+        "route": "route:items",
+        "children": [],
+        "iconHint": "collection"
+      },
+      {
+        "id": "navigation:decisions",
+        "label": {
+          "id": "navigation.decisions.label",
+          "fallback": "Decisions"
+        },
+        "children": [
+          {
+            "id": "navigation:proposal-decision",
+            "label": {
+              "id": "navigation.proposalDecision.label",
+              "fallback": "Review proposal"
+            },
+            "route": "route:proposal-decision",
+            "children": [],
+            "requiredPermissions": {
+              "kind": "permission",
+              "permission": "permission:proposal.decide"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "resource:actor": {
+      "id": "resource:actor",
+      "label": {
+        "id": "resource.actor.label",
+        "fallback": "Person"
+      },
+      "pluralLabel": {
+        "id": "resource.actor.pluralLabel",
+        "fallback": "People"
+      },
+      "identityField": "field:actor.id",
+      "fields": {
+        "field:actor.id": {
+          "id": "field:actor.id",
+          "label": {
+            "id": "field.actor.id.label",
+            "fallback": "Identifier"
+          },
+          "valueType": "identifier",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:actor.displayName": {
+          "id": "field:actor.displayName",
+          "label": {
+            "id": "field.actor.displayName.label",
+            "fallback": "Name"
+          },
+          "valueType": "text",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        }
+      },
+      "states": {},
+      "relationships": {},
+      "display": {
+        "titleField": "field:actor.displayName"
+      }
+    },
+    "resource:item": {
+      "id": "resource:item",
+      "label": {
+        "id": "resource.item.label",
+        "fallback": "Item"
+      },
+      "pluralLabel": {
+        "id": "resource.item.pluralLabel",
+        "fallback": "Items"
+      },
+      "identityField": "field:item.id",
+      "fields": {
+        "field:item.id": {
+          "id": "field:item.id",
+          "label": {
+            "id": "field.item.id.label",
+            "fallback": "Identifier"
+          },
+          "valueType": "identifier",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:item.version": {
+          "id": "field:item.version",
+          "label": {
+            "id": "field.item.version.label",
+            "fallback": "Version"
+          },
+          "valueType": "identifier",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:item.title": {
+          "id": "field:item.title",
+          "label": {
+            "id": "field.item.title.label",
+            "fallback": "Title"
+          },
+          "description": {
+            "id": "field.item.title.description",
+            "fallback": "A concise, recognizable title."
+          },
+          "valueType": "text",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": false,
+          "validation": [
+            {
+              "id": "constraint:item.title.required",
+              "kind": "required",
+              "message": {
+                "id": "constraint.item.title.required",
+                "fallback": "Enter a title."
+              },
+              "parameters": {},
+              "timing": "submit",
+              "severity": "error"
+            },
+            {
+              "id": "constraint:item.title.minimumLength",
+              "kind": "minimum_length",
+              "message": {
+                "id": "constraint.item.title.minimumLength",
+                "fallback": "Use at least three characters."
+              },
+              "parameters": {
+                "minimum": 3
+              },
+              "timing": "blur",
+              "severity": "error"
+            },
+            {
+              "id": "constraint:item.title.server",
+              "kind": "server_only",
+              "message": {
+                "id": "constraint.item.title.server",
+                "fallback": "The title could not be accepted."
+              },
+              "parameters": {
+                "fieldPath": "changes.title"
+              },
+              "timing": "server",
+              "severity": "error"
+            }
+          ]
+        },
+        "field:item.status": {
+          "id": "field:item.status",
+          "label": {
+            "id": "field.item.status.label",
+            "fallback": "Status"
+          },
+          "valueType": "enum",
+          "valueTypeParameters": {
+            "values": ["open", "blocked", "done"]
+          },
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": [
+            {
+              "id": "constraint:item.status.allowedValues",
+              "kind": "allowed_values",
+              "message": {
+                "id": "constraint.item.status.allowedValues",
+                "fallback": "Choose an available status."
+              },
+              "parameters": {
+                "values": ["open", "blocked", "done"]
+              },
+              "timing": "submit",
+              "severity": "error"
+            }
+          ]
+        },
+        "field:item.owner": {
+          "id": "field:item.owner",
+          "label": {
+            "id": "field.item.owner.label",
+            "fallback": "Owner"
+          },
+          "valueType": "reference",
+          "valueTypeParameters": {
+            "resource": "resource:actor"
+          },
+          "cardinality": {
+            "minimum": 0,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:item.dueAt": {
+          "id": "field:item.dueAt",
+          "label": {
+            "id": "field.item.dueAt.label",
+            "fallback": "Due"
+          },
+          "valueType": "dateTime",
+          "cardinality": {
+            "minimum": 0,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:item.history": {
+          "id": "field:item.history",
+          "label": {
+            "id": "field.item.history.label",
+            "fallback": "History"
+          },
+          "valueType": "structured",
+          "valueTypeParameters": {
+            "shape": "oui.reference.v1.ItemHistoryEvent"
+          },
+          "cardinality": {
+            "minimum": 0,
+            "maximum": null
+          },
+          "readOnly": true,
+          "validation": []
+        }
+      },
+      "states": {
+        "state:item.open": {
+          "id": "state:item.open",
+          "label": {
+            "id": "state.item.open.label",
+            "fallback": "Open"
+          },
+          "terminal": false,
+          "statusRole": "informative"
+        },
+        "state:item.blocked": {
+          "id": "state:item.blocked",
+          "label": {
+            "id": "state.item.blocked.label",
+            "fallback": "Blocked"
+          },
+          "terminal": false,
+          "statusRole": "warning"
+        },
+        "state:item.done": {
+          "id": "state:item.done",
+          "label": {
+            "id": "state.item.done.label",
+            "fallback": "Done"
+          },
+          "terminal": true,
+          "statusRole": "positive"
+        }
+      },
+      "relationships": {
+        "relationship:item.owner": {
+          "id": "relationship:item.owner",
+          "label": {
+            "id": "relationship.item.owner.label",
+            "fallback": "Owned by"
+          },
+          "field": "field:item.owner",
+          "target": "resource:actor",
+          "cardinality": {
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "relationship:item.related": {
+          "id": "relationship:item.related",
+          "label": {
+            "id": "relationship.item.related.label",
+            "fallback": "Related items"
+          },
+          "target": "resource:item",
+          "itemsPath": "related",
+          "itemLabelField": "field:item.title",
+          "cardinality": {
+            "minimum": 0,
+            "maximum": null
+          }
+        }
+      },
+      "display": {
+        "titleField": "field:item.title",
+        "summaryFields": [
+          "field:item.status",
+          "field:item.owner",
+          "field:item.dueAt"
+        ]
+      }
+    },
+    "resource:proposal": {
+      "id": "resource:proposal",
+      "label": {
+        "id": "resource.proposal.label",
+        "fallback": "Proposal"
+      },
+      "pluralLabel": {
+        "id": "resource.proposal.pluralLabel",
+        "fallback": "Proposals"
+      },
+      "identityField": "field:proposal.id",
+      "fields": {
+        "field:proposal.id": {
+          "id": "field:proposal.id",
+          "label": {
+            "id": "field.proposal.id.label",
+            "fallback": "Identifier"
+          },
+          "valueType": "identifier",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:proposal.version": {
+          "id": "field:proposal.version",
+          "label": {
+            "id": "field.proposal.version.label",
+            "fallback": "Version"
+          },
+          "valueType": "identifier",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:proposal.title": {
+          "id": "field:proposal.title",
+          "label": {
+            "id": "field.proposal.title.label",
+            "fallback": "Title"
+          },
+          "valueType": "text",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:proposal.summary": {
+          "id": "field:proposal.summary",
+          "label": {
+            "id": "field.proposal.summary.label",
+            "fallback": "Summary"
+          },
+          "valueType": "richText",
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        },
+        "field:proposal.status": {
+          "id": "field:proposal.status",
+          "label": {
+            "id": "field.proposal.status.label",
+            "fallback": "Status"
+          },
+          "valueType": "enum",
+          "valueTypeParameters": {
+            "values": ["pending", "approved", "rejected"]
+          },
+          "cardinality": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "readOnly": true,
+          "validation": []
+        }
+      },
+      "states": {
+        "state:proposal.pending": {
+          "id": "state:proposal.pending",
+          "label": {
+            "id": "state.proposal.pending.label",
+            "fallback": "Pending"
+          },
+          "terminal": false,
+          "statusRole": "informative"
+        },
+        "state:proposal.approved": {
+          "id": "state:proposal.approved",
+          "label": {
+            "id": "state.proposal.approved.label",
+            "fallback": "Approved"
+          },
+          "terminal": true,
+          "statusRole": "positive"
+        },
+        "state:proposal.rejected": {
+          "id": "state:proposal.rejected",
+          "label": {
+            "id": "state.proposal.rejected.label",
+            "fallback": "Rejected"
+          },
+          "terminal": true,
+          "statusRole": "critical"
+        }
+      },
+      "relationships": {},
+      "display": {
+        "titleField": "field:proposal.title",
+        "summaryFields": ["field:proposal.status"]
+      }
+    }
+  },
+  "queries": {
+    "query:list-items": {
+      "id": "query:list-items",
+      "service": "service:reference",
+      "method": "oui.reference.v1.ReferenceFrontendService.ListItems",
+      "input": {
+        "bindings": {
+          "page_size": {
+            "source": "literal",
+            "value": 25
+          },
+          "page_token": {
+            "source": "search",
+            "parameter": "search:page"
+          },
+          "query": {
+            "source": "search",
+            "parameter": "search:query"
+          },
+          "statuses": {
+            "source": "search",
+            "parameter": "search:status"
+          },
+          "sort": {
+            "source": "search",
+            "parameter": "search:sort"
+          },
+          "direction": {
+            "source": "search",
+            "parameter": "search:direction"
+          }
+        }
+      },
+      "output": {
+        "resource": "resource:item",
+        "itemsPath": "items"
+      },
+      "cache": {
+        "identity": ["query", "statuses", "page_token"],
+        "freshFor": "PT30S"
+      },
+      "pagination": {
+        "kind": "cursor",
+        "requestTokenPath": "page_token",
+        "responseTokenPath": "next_page_token",
+        "resetOn": ["query", "statuses", "sort"]
+      }
+    },
+    "query:get-item": {
+      "id": "query:get-item",
+      "service": "service:reference",
+      "method": "oui.reference.v1.ReferenceFrontendService.GetItem",
+      "input": {
+        "bindings": {
+          "item_id": {
+            "source": "route",
+            "parameter": "path:itemId"
+          }
+        }
+      },
+      "output": {
+        "resource": "resource:item",
+        "itemPath": "item"
+      },
+      "cache": {
+        "identity": ["item_id"],
+        "freshFor": "PT15S"
+      }
+    },
+    "query:get-decision-context": {
+      "id": "query:get-decision-context",
+      "service": "service:reference",
+      "method": "oui.reference.v1.ReferenceFrontendService.GetDecisionContext",
+      "input": {
+        "bindings": {
+          "proposal_id": {
+            "source": "route",
+            "parameter": "path:proposalId"
+          }
+        }
+      },
+      "output": {
+        "resource": "resource:proposal",
+        "itemPath": "proposal",
+        "evidencePath": "evidence",
+        "alternativesPath": "alternatives"
+      },
+      "cache": {
+        "identity": ["proposal_id"],
+        "freshFor": "PT0S"
+      },
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:proposal.view"
+      }
+    }
+  },
+  "commands": {
+    "command:update-item": {
+      "id": "command:update-item",
+      "service": "service:reference",
+      "method": "oui.reference.v1.ReferenceFrontendService.UpdateItem",
+      "input": {
+        "bindings": {
+          "item_id": {
+            "source": "route",
+            "parameter": "path:itemId"
+          },
+          "expected_version": {
+            "source": "initial",
+            "field": "field:item.version"
+          },
+          "changes": {
+            "source": "form"
+          },
+          "update_mask": {
+            "source": "dirty_fields"
+          }
+        }
+      },
+      "output": {
+        "resource": "resource:item",
+        "itemPath": "item",
+        "auditIdPath": "audit_id"
+      },
+      "idempotency": "supported",
+      "consequence": "reversible",
+      "invalidates": ["query:list-items", "query:get-item"],
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:item.update"
+      }
+    },
+    "command:decide-proposal": {
+      "id": "command:decide-proposal",
+      "service": "service:reference",
+      "method": "oui.reference.v1.ReferenceFrontendService.DecideProposal",
+      "input": {
+        "bindings": {
+          "proposal_id": {
+            "source": "route",
+            "parameter": "path:proposalId"
+          },
+          "expected_version": {
+            "source": "query_output",
+            "query": "query:get-decision-context",
+            "path": "proposal.version"
+          },
+          "alternative_id": {
+            "source": "interaction",
+            "value": "selected_alternative"
+          },
+          "reason": {
+            "source": "interaction",
+            "value": "reason"
+          }
+        }
+      },
+      "output": {
+        "resource": "resource:proposal",
+        "itemPath": "proposal",
+        "operationPath": "operation",
+        "auditIdPath": "audit_id"
+      },
+      "idempotency": "required",
+      "consequence": "irreversible",
+      "invalidates": ["query:get-decision-context"],
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:proposal.decide"
+      },
+      "confirmation": {
+        "required": true,
+        "message": {
+          "id": "command.proposal.confirmation",
+          "fallback": "Confirm this decision. It cannot be undone."
+        }
+      }
+    }
+  },
+  "interactions": {
+    "interaction:item-collection": {
+      "id": "interaction:item-collection",
+      "kind": "collection",
+      "intent": "intent:inspect-collection",
+      "label": {
+        "id": "interaction.itemCollection.label",
+        "fallback": "Items"
+      },
+      "subject": "resource:item",
+      "queries": ["query:list-items"],
+      "commands": [],
+      "regions": [
+        {
+          "id": "region:item-collection.primary",
+          "kind": "primary",
+          "required": true
+        }
+      ],
+      "collection": {
+        "query": "query:list-items",
+        "visibleFields": [
+          "field:item.title",
+          "field:item.status",
+          "field:item.owner",
+          "field:item.dueAt"
+        ],
+        "identityField": "field:item.id",
+        "filters": [
+          {
+            "id": "filter:item.query",
+            "kind": "text",
+            "searchParameter": "search:query"
+          },
+          {
+            "id": "filter:item.status",
+            "kind": "multi_select",
+            "field": "field:item.status",
+            "searchParameter": "search:status"
+          }
+        ],
+        "sorting": {
+          "supportedFields": ["field:item.title", "field:item.status"],
+          "default": {
+            "field": "field:item.title",
+            "direction": "ascending"
+          }
+        },
+        "grouping": {
+          "supported": false
+        },
+        "pagination": {
+          "kind": "cursor"
+        },
+        "selection": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "emptyState": {
+          "title": {
+            "id": "interaction.itemCollection.empty.title",
+            "fallback": "No items found"
+          },
+          "description": {
+            "id": "interaction.itemCollection.empty.description",
+            "fallback": "Change the filters or try again later."
+          }
+        },
+        "itemRoute": "route:item-detail"
+      },
+      "presentation": {
+        "preferredVariant": "table"
+      }
+    },
+    "interaction:item-detail": {
+      "id": "interaction:item-detail",
+      "kind": "detail",
+      "intent": "intent:inspect-resource",
+      "label": {
+        "id": "interaction.itemDetail.label",
+        "fallback": "Item details"
+      },
+      "subject": "resource:item",
+      "queries": ["query:get-item"],
+      "commands": ["command:update-item"],
+      "regions": [
+        {
+          "id": "region:item-detail.summary",
+          "kind": "summary",
+          "required": true,
+          "fields": [
+            "field:item.title",
+            "field:item.status",
+            "field:item.dueAt"
+          ]
+        },
+        {
+          "id": "region:item-detail.relationships",
+          "kind": "relationships",
+          "required": true,
+          "relationships": [
+            "relationship:item.owner",
+            "relationship:item.related"
+          ]
+        },
+        {
+          "id": "region:item-detail.history",
+          "kind": "history",
+          "required": true,
+          "sourceField": "field:item.history"
+        }
+      ],
+      "detail": {
+        "query": "query:get-item",
+        "titleField": "field:item.title",
+        "editRoute": "route:item-edit"
+      }
+    },
+    "interaction:item-edit": {
+      "id": "interaction:item-edit",
+      "kind": "form",
+      "intent": "intent:modify-resource",
+      "label": {
+        "id": "interaction.itemEdit.label",
+        "fallback": "Edit item"
+      },
+      "subject": "resource:item",
+      "queries": ["query:get-item"],
+      "commands": ["command:update-item"],
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:item.update"
+      },
+      "regions": [
+        {
+          "id": "region:item-edit.primary",
+          "kind": "form",
+          "required": true
+        }
+      ],
+      "form": {
+        "mode": "edit",
+        "initialValues": {
+          "source": "query",
+          "query": "query:get-item",
+          "path": "item"
+        },
+        "fields": [
+          "field:item.title",
+          "field:item.status",
+          "field:item.owner",
+          "field:item.dueAt"
+        ],
+        "submitCommand": "command:update-item",
+        "validation": {
+          "input": true,
+          "blur": true,
+          "submit": true,
+          "serverViolationPath": "violations"
+        },
+        "success": {
+          "kind": "navigate",
+          "route": "route:item-detail"
+        },
+        "cancelRoute": "route:item-detail",
+        "unsavedChanges": "confirm_discard"
+      }
+    },
+    "interaction:proposal-decision": {
+      "id": "interaction:proposal-decision",
+      "kind": "decision",
+      "intent": "intent:decide-proposal",
+      "label": {
+        "id": "interaction.proposalDecision.label",
+        "fallback": "Decide proposal"
+      },
+      "subject": "resource:proposal",
+      "queries": ["query:get-decision-context"],
+      "commands": ["command:decide-proposal"],
+      "requiredPermissions": {
+        "kind": "permission",
+        "permission": "permission:proposal.decide"
+      },
+      "regions": [
+        {
+          "id": "region:proposal-decision.summary",
+          "kind": "summary",
+          "required": true,
+          "fields": [
+            "field:proposal.title",
+            "field:proposal.summary",
+            "field:proposal.status"
+          ]
+        },
+        {
+          "id": "region:proposal-decision.evidence",
+          "kind": "evidence",
+          "required": true,
+          "sourcePath": "evidence"
+        },
+        {
+          "id": "region:proposal-decision.policy",
+          "kind": "policy",
+          "required": true,
+          "sourcePath": "policy_explanation"
+        }
+      ],
+      "decision": {
+        "query": "query:get-decision-context",
+        "subjectPath": "proposal",
+        "evidence": {
+          "sourcePath": "evidence",
+          "requiredBeforeAction": true
+        },
+        "alternatives": [
+          {
+            "id": "alternative:proposal.approve",
+            "label": {
+              "id": "alternative.proposal.approve.label",
+              "fallback": "Approve"
+            },
+            "command": "command:decide-proposal",
+            "commandArguments": {
+              "alternative_id": "approve"
+            },
+            "reason": "optional",
+            "confirmation": "required"
+          },
+          {
+            "id": "alternative:proposal.reject",
+            "label": {
+              "id": "alternative.proposal.reject.label",
+              "fallback": "Reject"
+            },
+            "command": "command:decide-proposal",
+            "commandArguments": {
+              "alternative_id": "reject"
+            },
+            "reason": "required",
+            "confirmation": "required",
+            "requiredPermissions": {
+              "kind": "permission",
+              "permission": "permission:proposal.reject"
+            },
+            "unavailable": {
+              "behavior": "disabled",
+              "explanation": {
+                "id": "alternative.proposal.reject.unavailable",
+                "fallback": "You can review this proposal but cannot reject it."
+              }
+            }
+          }
+        ],
+        "preconditions": [
+          {
+            "id": "precondition:proposal.pending",
+            "kind": "field_equals",
+            "field": "field:proposal.status",
+            "value": "pending"
+          }
+        ],
+        "outcome": {
+          "kind": "refresh",
+          "query": "query:get-decision-context"
+        },
+        "conflictRecovery": {
+          "kind": "refresh_and_explain"
+        }
+      }
+    }
+  },
+  "serviceBindings": {
+    "service:reference": {
+      "id": "service:reference",
+      "protocol": "connect",
+      "serviceType": "oui.reference.v1.ReferenceFrontendService",
+      "endpoint": "runtime:bffBaseUrl",
+      "capabilities": ["unary", "server_stream"]
+    }
+  },
+  "presentation": {
+    "theme": {
+      "capability": "presentation.theme.semantic-tokens",
+      "minimumVersion": "1.0.0"
+    },
+    "density": "comfortable",
+    "locale": "session_or_default",
+    "shell": {
+      "regions": [
+        {
+          "id": "shell:header",
+          "kind": "banner",
+          "required": true
+        },
+        {
+          "id": "shell:navigation",
+          "kind": "navigation",
+          "required": true
+        },
+        {
+          "id": "shell:main",
+          "kind": "main",
+          "required": true
+        },
+        {
+          "id": "shell:notifications",
+          "kind": "status",
+          "required": true
+        }
+      ],
+      "skipLink": {
+        "id": "shell.skipToMain",
+        "fallback": "Skip to main content"
+      }
+    }
+  },
+  "permissions": {
+    "definitions": {
+      "permission:item.update": {
+        "id": "permission:item.update",
+        "label": {
+          "id": "permission.item.update.label",
+          "fallback": "Update items"
+        }
+      },
+      "permission:proposal.view": {
+        "id": "permission:proposal.view",
+        "label": {
+          "id": "permission.proposal.view.label",
+          "fallback": "View proposals"
+        }
+      },
+      "permission:proposal.decide": {
+        "id": "permission:proposal.decide",
+        "label": {
+          "id": "permission.proposal.decide.label",
+          "fallback": "Decide proposals"
+        }
+      },
+      "permission:proposal.reject": {
+        "id": "permission:proposal.reject",
+        "label": {
+          "id": "permission.proposal.reject.label",
+          "fallback": "Reject proposals"
+        }
+      }
+    }
+  },
+  "provenance": {
+    "sourceDocument": "fixture:reference-application",
+    "compilerRule": "fixture:hand-authored-contract-example"
+  }
+}

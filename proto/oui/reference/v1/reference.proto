@@ -1,0 +1,268 @@
+syntax = "proto3";
+
+package oui.reference.v1;
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+// ReferenceFrontendService is a domain-neutral BFF contract used by OUI
+// fixtures and conformance tests.
+service ReferenceFrontendService {
+  rpc GetCompatibility(GetCompatibilityRequest) returns (GetCompatibilityResponse);
+  rpc GetSession(GetSessionRequest) returns (GetSessionResponse);
+  rpc ListItems(ListItemsRequest) returns (ListItemsResponse);
+  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+  rpc UpdateItem(UpdateItemRequest) returns (UpdateItemResponse);
+  rpc GetDecisionContext(GetDecisionContextRequest) returns (GetDecisionContextResponse);
+  rpc DecideProposal(DecideProposalRequest) returns (DecideProposalResponse);
+  rpc WatchOperation(WatchOperationRequest) returns (stream WatchOperationResponse);
+}
+
+message GetCompatibilityRequest {}
+
+message GetCompatibilityResponse {
+  string application_id = 1;
+  string ir_version = 2;
+  string ir_digest = 3;
+  string bff_plan_digest = 4;
+  string descriptor_digest = 5;
+  string generated_go_digest = 6;
+  string connect_digest = 7;
+  string generator_version = 8;
+  string runtime_version = 9;
+  string manifest_digest = 10;
+  string contract_digest = 11;
+  repeated string capabilities = 12;
+}
+
+message GetSessionRequest {}
+
+message GetSessionResponse {
+  Actor actor = 1;
+  repeated string capabilities = 2;
+  string locale = 3;
+  string time_zone = 4;
+}
+
+message Actor {
+  string id = 1;
+  string display_name = 2;
+}
+
+message Item {
+  string id = 1;
+  string version = 2;
+  string title = 3;
+  ItemStatus status = 4;
+  Actor owner = 5;
+  google.protobuf.Timestamp due_at = 6;
+  repeated ItemHistoryEvent history = 7;
+}
+
+enum ItemStatus {
+  ITEM_STATUS_UNSPECIFIED = 0;
+  ITEM_STATUS_OPEN = 1;
+  ITEM_STATUS_BLOCKED = 2;
+  ITEM_STATUS_DONE = 3;
+}
+
+message ItemHistoryEvent {
+  string id = 1;
+  google.protobuf.Timestamp occurred_at = 2;
+  Actor actor = 3;
+  string kind = 4;
+  string summary = 5;
+}
+
+message ListItemsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  string query = 3;
+  repeated ItemStatus statuses = 4;
+  ItemSort sort = 5;
+}
+
+message ItemSort {
+  ItemSortField field = 1;
+  SortDirection direction = 2;
+}
+
+enum ItemSortField {
+  ITEM_SORT_FIELD_UNSPECIFIED = 0;
+  ITEM_SORT_FIELD_TITLE = 1;
+  ITEM_SORT_FIELD_STATUS = 2;
+  ITEM_SORT_FIELD_DUE_AT = 3;
+}
+
+enum SortDirection {
+  SORT_DIRECTION_UNSPECIFIED = 0;
+  SORT_DIRECTION_ASCENDING = 1;
+  SORT_DIRECTION_DESCENDING = 2;
+}
+
+message ListItemsResponse {
+  repeated Item items = 1;
+  string next_page_token = 2;
+  string result_version = 3;
+}
+
+message GetItemRequest {
+  string item_id = 1;
+}
+
+message GetItemResponse {
+  Item item = 1;
+}
+
+message UpdateItemRequest {
+  string item_id = 1;
+  string expected_version = 2;
+  Item changes = 3;
+  google.protobuf.FieldMask update_mask = 4;
+}
+
+message UpdateItemResponse {
+  Item item = 1;
+  string audit_id = 2;
+}
+
+message GetDecisionContextRequest {
+  string proposal_id = 1;
+}
+
+message GetDecisionContextResponse {
+  Proposal proposal = 1;
+  repeated EvidenceItem evidence = 2;
+  repeated DecisionAlternative alternatives = 3;
+  string policy_explanation = 4;
+}
+
+message Proposal {
+  string id = 1;
+  string version = 2;
+  string title = 3;
+  string summary = 4;
+  ProposalStatus status = 5;
+}
+
+enum ProposalStatus {
+  PROPOSAL_STATUS_UNSPECIFIED = 0;
+  PROPOSAL_STATUS_PENDING = 1;
+  PROPOSAL_STATUS_APPROVED = 2;
+  PROPOSAL_STATUS_REJECTED = 3;
+}
+
+message EvidenceItem {
+  string id = 1;
+  string label = 2;
+  string summary = 3;
+  bool required_before_decision = 4;
+}
+
+message DecisionAlternative {
+  string id = 1;
+  string label = 2;
+  bool reason_required = 3;
+  bool confirmation_required = 4;
+}
+
+message DecideProposalRequest {
+  string proposal_id = 1;
+  string expected_version = 2;
+  string alternative_id = 3;
+  string reason = 4;
+}
+
+message DecideProposalResponse {
+  oneof outcome {
+    Proposal proposal = 1;
+    OperationAcknowledgement operation = 2;
+  }
+  string audit_id = 3;
+}
+
+message OperationAcknowledgement {
+  string operation_id = 1;
+  google.protobuf.Timestamp accepted_at = 2;
+  OperationStatus status = 3;
+  string resume_token = 4;
+  string audit_id = 5;
+}
+
+message WatchOperationRequest {
+  string operation_id = 1;
+  string resume_token = 2;
+}
+
+message WatchOperationResponse {
+  string operation_id = 1;
+  uint64 sequence = 2;
+  OperationStatus status = 3;
+  optional double progress = 4;
+  string message = 5;
+  string resume_token = 6;
+  google.protobuf.Timestamp observed_at = 7;
+  OperationErrorDetail error = 8;
+}
+
+enum OperationStatus {
+  OPERATION_STATUS_UNSPECIFIED = 0;
+  OPERATION_STATUS_ACCEPTED = 1;
+  OPERATION_STATUS_RUNNING = 2;
+  OPERATION_STATUS_SUCCEEDED = 3;
+  OPERATION_STATUS_FAILED = 4;
+  OPERATION_STATUS_CANCELLED = 5;
+  OPERATION_STATUS_EXPIRED = 6;
+}
+
+message ValidationErrorDetail {
+  repeated ValidationViolation violations = 1;
+}
+
+message ValidationViolation {
+  string field_path = 1;
+  string constraint_id = 2;
+  string reason = 3;
+  string message = 4;
+  string rejected_value_display = 5;
+}
+
+message PermissionErrorDetail {
+  string required_capability = 1;
+  string reason = 2;
+  string explanation = 3;
+  string remediation_action = 4;
+  string correlation_id = 5;
+}
+
+message ConflictErrorDetail {
+  string reason = 1;
+  string conflicting_id = 2;
+  string correlation_id = 3;
+}
+
+message StaleStateDetail {
+  string resource_id = 1;
+  string expected_version = 2;
+  string current_version = 3;
+  string refresh_action = 4;
+}
+
+message PreconditionErrorDetail {
+  string reason = 1;
+  repeated string unmet_preconditions = 2;
+  string correlation_id = 3;
+}
+
+message UnavailableErrorDetail {
+  string reason = 1;
+  optional google.protobuf.Timestamp retry_after = 2;
+  string correlation_id = 3;
+}
+
+message OperationErrorDetail {
+  string reason = 1;
+  string message = 2;
+  bool retryable = 3;
+  string correlation_id = 4;
+}

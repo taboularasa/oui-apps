@@ -1,0 +1,35 @@
+{
+  "name": "oui-apps-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": ">=24 <26",
+    "pnpm": "10.28.1"
+  },
+  "scripts": {
+    "build": "pnpm -r --workspace-concurrency=1 --if-present build",
+    "dev:reference": "pnpm --filter @oui/reference-app dev",
+    "dev:encounter": "pnpm --filter @oui/encounter-app dev",
+    "dev:obligation": "pnpm --filter @oui/obligation-app dev",
+    "dev:professional-services": "pnpm --filter @oui/professional-services-app dev",
+    "format": "prettier --write \"{apps,packages}/**/*.{ts,tsx,css,json,md,mjs}\" \"{docs,fixtures}/**/*.{json,md}\" \"*.{json,yaml,yml,mjs,md}\"",
+    "format:check": "prettier --check \"{apps,packages}/**/*.{ts,tsx,css,json,md,mjs}\" \"{docs,fixtures}/**/*.{json,md}\" \"*.{json,yaml,yml,mjs,md}\"",
+    "lint": "eslint .",
+    "test": "pnpm -r --workspace-concurrency=1 --if-present test",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "eslint": "10.8.1",
+    "globals": "17.11.0",
+    "prettier": "3.9.6",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint": "8.67.0"
+  }
+}
