@@ -1,0 +1,44 @@
+:root {
+  color-scheme: light dark;
+}
+
+.oui-theme {
+  min-height: 100%;
+  color: var(--oui-color-text-primary);
+  background: var(--oui-color-surface-canvas);
+  font-family: var(--oui-typography-family-body);
+  font-size: var(--oui-typography-size-body);
+  transition:
+    color var(--oui-motion-duration-fast) var(--oui-motion-easing-standard),
+    background-color var(--oui-motion-duration-normal)
+      var(--oui-motion-easing-standard);
+}
+
+.oui-theme :focus-visible {
+  outline: var(--oui-focus-ring-width) solid var(--oui-focus-ring-color);
+  outline-offset: var(--oui-focus-ring-offset);
+}
+
+@media (forced-colors: active) {
+  .oui-theme {
+    color: CanvasText;
+    background: Canvas;
+    forced-color-adjust: auto;
+  }
+
+  .oui-theme :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oui-theme,
+  .oui-theme *,
+  .oui-theme *::before,
+  .oui-theme *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

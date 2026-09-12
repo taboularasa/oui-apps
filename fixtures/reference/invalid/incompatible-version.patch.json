@@ -1,0 +1,7 @@
+[
+  {
+    "op": "replace",
+    "path": "/irVersion",
+    "value": "2.0.0"
+  }
+]

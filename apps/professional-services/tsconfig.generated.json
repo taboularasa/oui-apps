@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitOverride": false,
+    "noUnusedLocals": false,
+    "outDir": "node_modules/.cache/ontobff-generated",
+    "rootDir": "src/generated/ontobff",
+    "tsBuildInfoFile": "node_modules/.cache/ontobff-generated/.tsbuildinfo",
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/generated/ontobff/**/*.ts"]
+}

@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+}
+
+.oui-theme {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: var(--oui-spacing-section);
+}
+
+[data-oui-application-shell] {
+  display: grid;
+  gap: var(--oui-spacing-section);
+}
+
+[data-oui-skip-link] {
+  position: fixed;
+  inset-block-start: var(--oui-spacing-inline);
+  inset-inline-start: var(--oui-spacing-inline);
+  padding: var(--oui-spacing-inline);
+  background: var(--oui-color-surface-raised);
+  transform: translateY(-200%);
+}
+
+[data-oui-skip-link]:focus {
+  transform: translateY(0);
+}
+
+.professional-services-startup {
+  max-width: 60rem;
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+}
+
+.professional-services-startup form,
+.professional-services-startup label {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.professional-services-startup input,
+.professional-services-startup button {
+  padding: 0.5rem;
+  font: inherit;
+}
+
+.professional-services-session-controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem clamp(1rem, 4vw, 3rem) 0;
+}
+
+.professional-services-session-controls button {
+  padding: 0.5rem;
+  font: inherit;
+}

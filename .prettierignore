@@ -1,0 +1,14 @@
+**/coverage/
+**/dist/
+**/dist-types/
+**/node_modules/
+**/playwright-report/
+**/storybook-static/
+**/test-results/
+apps/encounter/src/generated/
+apps/obligation/src/generated/
+apps/professional-services/src/generated/
+apps/reference/src/generated/
+conformance/combined.report.json
+conformance/reference.report.json
+conformance/results/

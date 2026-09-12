@@ -1,0 +1,40 @@
+{
+  "generated": true,
+  "warning": "Generated import metadata. Synchronize from the pinned OntoBFF commit; do not edit generated bindings or infer domain semantics from them.",
+  "schemaVersion": "1.0.0",
+  "source": {
+    "repository": "taboularasa/ontobff",
+    "commit": "d60ea8aa0e2b386608f1ea809463af396cd8e572"
+  },
+  "outputManifestIdentity": "sha256:0737e45f7f6c42146bd7150a21efe9812fe9ac094635eb85a013f3b6ee15a6ef",
+  "contractDigest": "sha256:50bb7f68017fdb00d1e30b57884fc9c6ed4765f05fbe9bb49190a24e20b238ab",
+  "descriptorDigest": "sha256:b6f9c7b0a9ac702f772fb9c594bf3a1d902804c93699573c90e2418891adf7f9",
+  "planDigest": "sha256:a620e2a45f7b079e94185a6df18e17aade360766d89e5f0cefabdcb65c00b78e",
+  "files": [
+    {
+      "sourcePath": "apps/reference/gen/compatibility.json",
+      "importPath": "compatibility.json",
+      "digest": "sha256:13eb776d8831e794c4d5926949d63767c9b25a6727cb4c723a9d0978327aa75a"
+    },
+    {
+      "sourcePath": "apps/reference/gen/contract.json",
+      "importPath": "contract.json",
+      "digest": "sha256:6afa1114ccb2e657c467a6b50228b65e8d47bc8225bb84e96d55cd27d0d72d03"
+    },
+    {
+      "sourcePath": "apps/reference/gen/manifest.json",
+      "importPath": "manifest.json",
+      "digest": "sha256:62132c1d7521555168f5f6a285f47e34cac7a7760b52eac9f29f6881a3c131da"
+    },
+    {
+      "sourcePath": "apps/reference/gen/connect-es/oui/reference/v1/reference_pb.ts",
+      "importPath": "connect-es/oui/reference/v1/reference_pb.ts",
+      "digest": "sha256:286a5c5d7aed821d59ad1788a100e72ef59a314f0b8e216f4fb56588a6879f4f"
+    },
+    {
+      "sourcePath": "apps/reference/gen/connect-es/reference_client.ts",
+      "importPath": "connect-es/reference_client.ts",
+      "digest": "sha256:149deadb4ebdcdd92f4e37024d8a814981eb99586f70922676a525d10aae24e3"
+    }
+  ]
+}

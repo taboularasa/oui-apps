@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+}
+
+.oui-theme {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: var(--oui-spacing-section);
+}
+
+.encounter-controls {
+  padding: var(--oui-spacing-block);
+  border: 1px solid var(--oui-color-border-default);
+  border-radius: var(--oui-shape-radius-medium);
+  background: var(--oui-color-surface-raised);
+  box-shadow: var(--oui-elevation-raised);
+}
+
+[data-oui-application-shell] {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "navigation content"
+    "feedback feedback";
+  grid-template-columns: minmax(10rem, 16rem) minmax(0, 1fr);
+  gap: var(--oui-spacing-section);
+}
+
+[data-oui-skip-link] {
+  position: fixed;
+  inset-block-start: var(--oui-spacing-inline);
+  inset-inline-start: var(--oui-spacing-inline);
+  z-index: 1;
+  padding: var(--oui-spacing-inline);
+  background: var(--oui-color-surface-raised);
+  transform: translateY(-200%);
+}
+
+[data-oui-skip-link]:focus {
+  transform: translateY(0);
+}
+
+[data-oui-shell-header] {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+}
+
+[data-oui-shell-navigation] {
+  grid-area: navigation;
+}
+
+[data-oui-shell-navigation] ul {
+  display: grid;
+  gap: var(--oui-spacing-inline);
+  padding: 0;
+  list-style: none;
+}
+
+[data-oui-shell-content] {
+  grid-area: content;
+}
+
+[data-oui-shell-feedback] {
+  grid-area: feedback;
+}
+
+@media (max-width: 42rem) {
+  [data-oui-application-shell] {
+    grid-template-areas:
+      "header"
+      "navigation"
+      "content"
+      "feedback";
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.encounter-startup {
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  max-width: 60rem;
+}
+
+.encounter-startup pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.encounter-startup form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-block: 1rem;
+}
+
+.encounter-startup input {
+  min-width: min(28rem, 70vw);
+  padding: 0.5rem;
+  font: inherit;
+}
+
+.encounter-startup button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}

@@ -1,0 +1,34 @@
+{
+  "name": "@oui/encounter-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "typecheck": "tsc -b --pretty false",
+    "test": "vitest run --config vitest.node.config.ts",
+    "test:browser": "node e2e/run-browser-uat.mjs"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.11.0",
+    "@oui/core": "workspace:*",
+    "@oui/data": "workspace:*",
+    "@oui/react": "workspace:*",
+    "@oui/react-aria": "workspace:*",
+    "@oui/resource-patterns": "workspace:*",
+    "@oui/router": "workspace:*",
+    "@oui/theme-default": "workspace:*",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@oui/forms": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "@vitejs/plugin-react": "6.0.5",
+    "playwright": "1.62.1",
+    "vite": "8.2.1",
+    "vitest": "4.1.10"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "sourceRepository": "taboularasa/ontobff",
+  "sourceCommit": "3e4863853f2d6749becf570702f78232b65f8074",
+  "applicationId": "application:professional-services-conflict-decision",
+  "irDigest": "sha256:1fc86cb7e3809b6e00c836b28ab80108558987451679c900dcdd0f843e4a6eac",
+  "bffPlanDigest": "sha256:538c38279bd2eef60ef4707a6da6c677f898db5a886e0a40cb5f6bf000aca827",
+  "descriptorDigest": "sha256:0212fe0eb0527899f0213bcdf907bf66faaf322baa84fd1bd596982561d6073d",
+  "contractDigest": "sha256:8fb5500c939441fdb5676b49ce1d1c239f65ec534b4074eb8ae78e26ca294a30",
+  "outputManifestIdentity": "sha256:6bfb1fa0a5a5d74baa5a69f6fb1aa7c04766c256d5b11f8968b4c5b0fed898aa",
+  "files": {
+    "compatibility.json": "sha256:bfaec8079aef4bd4069cccba74c2e9846a2451fa433596060c7a6b4ebfe208a7",
+    "connect-es/oui/professional_services/v1/reference_pb.ts": "sha256:a538708e64c27e79dda7347227c54d13fb0fc7ac4069e81c75607808ffe24cd3",
+    "connect-es/reference_client.ts": "sha256:797ad663c1af2024c6f58b9d05ffc9dcab2fea7446e4abb0ec619f3e833c9af6",
+    "contract.json": "sha256:dc786df3a894a6907c6f0d5f6bfadd112af91d6ba22a3b63cb24c7c8bd610a82",
+    "descriptor.pb": "sha256:0212fe0eb0527899f0213bcdf907bf66faaf322baa84fd1bd596982561d6073d",
+    "manifest.json": "sha256:dbff5f437cffa5d42b76f1653a3c9d0869ac13114e25a1d565ee393c9c616abe"
+  }
+}

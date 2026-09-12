@@ -1,0 +1,55 @@
+{
+  "fixtureVersion": "1.0.0",
+  "base": "application.ir.json",
+  "valid": {
+    "compatibility": "compatible",
+    "expectedRouteTree": "expected/route-tree.generated.json",
+    "diagnostics": []
+  },
+  "invalid": [
+    {
+      "id": "missing-reference",
+      "patch": "invalid/missing-reference.patch.json",
+      "compatibility": "incompatible",
+      "diagnostics": [
+        {
+          "code": "IR_REFERENCE_UNRESOLVED",
+          "irPath": "/routes/route:item-detail/interaction"
+        }
+      ]
+    },
+    {
+      "id": "unsupported-kind",
+      "patch": "invalid/unsupported-kind.patch.json",
+      "compatibility": "incompatible",
+      "diagnostics": [
+        {
+          "code": "IR_UNKNOWN_INTERACTION_KIND",
+          "irPath": "/interactions/interaction:item-collection/kind"
+        }
+      ]
+    },
+    {
+      "id": "incompatible-version",
+      "patch": "invalid/incompatible-version.patch.json",
+      "compatibility": "incompatible",
+      "diagnostics": [
+        {
+          "code": "IR_VERSION_UNSUPPORTED_MAJOR",
+          "irPath": "/irVersion"
+        }
+      ]
+    },
+    {
+      "id": "invalid-constraint",
+      "patch": "invalid/invalid-constraint.patch.json",
+      "compatibility": "incompatible",
+      "diagnostics": [
+        {
+          "code": "IR_CONSTRAINT_PARAMETERS_INVALID",
+          "irPath": "/resources/resource:item/fields/field:item.title/validation/1/parameters/minimum"
+        }
+      ]
+    }
+  ]
+}

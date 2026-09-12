@@ -1,0 +1,17 @@
+{
+  "applicationId": "application:obligation-register",
+  "bffPlanDigest": "sha256:a7120a0d133e8c5c791cec26861b4a513a160493ed0efeca91df1ce62a526acb",
+  "contractDigest": "sha256:f9e0c965f60d069fbac819d4a4d873c6743f858d39f67ccbe983debc60c1a321",
+  "descriptorDigest": "sha256:221ce42ef292c01367535d0aa5fff0bab0b195187b678f237c03c13587ae7659",
+  "files": {
+    "compatibility.json": "sha256:c75994b4e8a9c1dd9ab72f21135805ef7c7b13f3478cb8852f651c0415520890",
+    "connect-es/oui/obligation/v1/reference_pb.ts": "sha256:646ac042cba29977f27d8d3052ae58806d75a7a0518aae71d53da2ea74bba730",
+    "connect-es/reference_client.ts": "sha256:78d531590b7296eb11e69ac83364c0b323f8fa4f6a0f2227a9255ebd6658391e",
+    "contract.json": "sha256:b5e3ccf520ade486a49d880d3bc6a7625434916c184bc2b18d035e47749d5904",
+    "manifest.json": "sha256:b3c0cbd28542451cb814427a40b44af393e0b0264d56843a543fdce7b6f2e04b"
+  },
+  "irDigest": "sha256:20acb6a47912913daf307e673f385eb3690fa468bea581873c37564bc33f55cd",
+  "outputManifestIdentity": "sha256:29842b34905a0fb621965b4003d100420dfc0e2909339e3795d43350308af78e",
+  "sourceCommit": "6facacc10cbddc80677d6f36c60c14137d6adb29",
+  "sourceRepository": "taboularasa/ontobff"
+}

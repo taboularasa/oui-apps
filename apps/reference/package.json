@@ -1,0 +1,46 @@
+{
+  "name": "@oui/reference-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b --pretty false && vite build",
+    "dev": "vite",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "test": "pnpm test:unit && pnpm test:browser",
+    "test:browser": "vitest run",
+    "test:unit": "vitest run --config vitest.node.config.ts",
+    "test:e2e": "bash ../../scripts/live-uat.sh",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.11.0",
+    "@oui/core": "workspace:*",
+    "@oui/data": "workspace:*",
+    "@oui/decision-patterns": "workspace:*",
+    "@oui/forms": "workspace:*",
+    "@oui/patterns": "workspace:*",
+    "@oui/react": "workspace:*",
+    "@oui/react-aria": "workspace:*",
+    "@oui/resource-patterns": "workspace:*",
+    "@oui/router": "workspace:*",
+    "@oui/theme-default": "workspace:*",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@rolldown/plugin-babel": "0.2.3",
+    "@storybook/addon-a11y": "10.5.8",
+    "@storybook/react-vite": "10.5.8",
+    "@vitejs/plugin-react": "6.0.5",
+    "@vitest/browser-playwright": "4.1.10",
+    "axe-core": "4.13.0",
+    "babel-plugin-react-compiler": "1.0.0",
+    "playwright": "1.62.1",
+    "storybook": "10.5.8",
+    "vite": "8.2.1",
+    "vitest": "4.1.10"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "sourceRepository": "taboularasa/smb-ontology-platform",
+  "sourceCommit": "4818131ac4d24cc089d4feb353c2a65c8adbc5f3",
+  "sourcePath": "tests/fixtures/semantic_compiler/professional_services_conflict_decision.yaml",
+  "sourceDigest": "sha256:14765a9ad30c53eb6d87a974eb592b86b035e4123333fa07990179648278ab60",
+  "compiler": "smb-ontology-platform.semantic-compiler/v1",
+  "applicationId": "application:professional-services-conflict-decision",
+  "irDigest": "sha256:1fc86cb7e3809b6e00c836b28ab80108558987451679c900dcdd0f843e4a6eac",
+  "specificationDigest": "sha256:40fd745bbada560e203a78f76d28428b3f006984711225a67ff3b685122add16",
+  "files": {
+    "application.ir.json": "sha256:1fc86cb7e3809b6e00c836b28ab80108558987451679c900dcdd0f843e4a6eac",
+    "bff-plan.json": "sha256:fe2020a07bcbf1fdecdfb744af8bfb5b00371162ba9b6b994c46b78c512726be",
+    "compiler-output-manifest.json": "sha256:41fa8bfe54affa78f6923652902edca82ea455ec1e68e61a36d6b161d0ee2df2",
+    "diagnostics.json": "sha256:f8f6a97068d269844c043299b0686f7092b885ac1bac96d975d1e714162d45a1",
+    "oui-application.generated.ts": "sha256:8e22e75a9629003a90cc20e79d3826b7b7f394626a8dd53f08525c7b5957a05a",
+    "provenance.json": "sha256:396b72863d11fdb14ea750f931bb034a728955c7a98d28a671dbcb2d41f304f7"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rootDir": ".",
+    "outDir": "dist-types",
+    "tsBuildInfoFile": "dist-types/.tsbuildinfo",
+    "types": ["node", "vitest/globals"]
+  },
+  "include": [
+    ".storybook",
+    "src",
+    "src/**/*.json",
+    "e2e",
+    "playwright.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["src/generated/**/*.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.generated.json"
+    },
+    {
+      "path": "../../packages/core"
+    },
+    {
+      "path": "../../packages/data"
+    },
+    {
+      "path": "../../packages/decision-patterns"
+    },
+    {
+      "path": "../../packages/forms"
+    },
+    {
+      "path": "../../packages/react"
+    },
+    {
+      "path": "../../packages/react-aria"
+    },
+    {
+      "path": "../../packages/resource-patterns"
+    },
+    {
+      "path": "../../packages/patterns"
+    },
+    {
+      "path": "../../packages/router"
+    },
+    {
+      "path": "../../packages/theme-default"
+    }
+  ]
+}
