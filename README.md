@@ -80,3 +80,11 @@ pnpm --filter @oui/reference-app storybook
 This repository intentionally omits private deployment configuration, release-signing material, retained operational logs, conformance ledgers, and private integration automation. It contains no production credentials or customer data.
 
 No license has been granted yet. The source is publicly visible, but normal copyright restrictions apply until the repository receives an explicit license.
+
+### Encounter demo access
+
+The Encounter application opens directly with the intentionally public
+`public-demo` identity. Its backend must seed that identity with
+`ENCOUNTER_BFF_TEST_TOKEN=public-demo`. The generated backend still enforces
+the seeded actor's capabilities. The application discards credentials saved
+by the former sign-in screen and removes legacy `token` query parameters.
