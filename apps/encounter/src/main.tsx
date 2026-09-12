@@ -1,4 +1,4 @@
-import { StrictMode, useState } from "react";
+import { StrictMode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import "@oui/theme-default/styles.css";
 import "@oui/react-aria/styles.css";
@@ -13,58 +13,24 @@ if (!(container instanceof HTMLElement)) {
 }
 const root = createRoot(container);
 
-const credentialKey = "encounter-workbench.credential";
-
-/**
- * The credential is kept for the tab's lifetime so a deep link or a reload
- * stays signed in. Navigating between routes drops the query string, and a
- * demo that signs the actor out on every reload is not usable.
- */
-function readStoredCredential(): string | null {
-  try {
-    return window.sessionStorage.getItem(credentialKey);
-  } catch {
-    return null;
-  }
+// This entry point is an open demonstration using the backend's seeded demo
+// actor. Discard credentials retained by the former sign-in screen so old tabs
+// and bookmarked token URLs cannot override the public demo identity.
+try {
+  window.sessionStorage.removeItem("encounter-workbench.credential");
+} catch {
+  // Storage is optional; startup does not read credentials from it.
 }
-
-function storeCredential(token: string): void {
-  try {
-    window.sessionStorage.setItem(credentialKey, token);
-  } catch {
-    // A blocked storage partition only costs the convenience, not the session.
-  }
-}
-
 const url = new URL(window.location.href);
-const tokenFromUrl = url.searchParams.get("token");
-const credential =
-  tokenFromUrl !== null && tokenFromUrl !== ""
-    ? tokenFromUrl
-    : readStoredCredential();
-
-if (credential !== null && credential !== "") {
-  storeCredential(credential);
-  // Keep the credential out of the address bar and out of shared links.
-  if (tokenFromUrl !== null) {
-    url.searchParams.delete("token");
-    window.history.replaceState(
-      null,
-      "",
-      `${url.pathname}${url.search}${url.hash}`,
-    );
-  }
-  start(root, credential);
-} else {
-  root.render(
-    <CredentialPrompt
-      onSubmit={(token) => {
-        storeCredential(token);
-        start(root, token);
-      }}
-    />,
+if (url.searchParams.has("token")) {
+  url.searchParams.delete("token");
+  window.history.replaceState(
+    null,
+    "",
+    `${url.pathname}${url.search}${url.hash}`,
   );
 }
+start(root);
 
 /**
  * Land on the first declared navigation entry when the bundle is opened at its
@@ -90,9 +56,9 @@ function enterLandingRoute(composition: EncounterApplicationComposition): void {
   window.history.replaceState(null, "", target);
 }
 
-function start(reactRoot: Root, token: string): void {
+function start(reactRoot: Root): void {
   reactRoot.render(<Startup message="Checking OntoBFF compatibility" />);
-  void bootstrapEncounterApplication(token)
+  void bootstrapEncounterApplication("public-demo")
     .then((composition) => {
       enterLandingRoute(composition);
       reactRoot.render(
@@ -110,7 +76,7 @@ function start(reactRoot: Root, token: string): void {
               ? error.message
               : "Startup failed without a diagnostic."
           }
-          onRetry={(retryToken) => start(reactRoot, retryToken)}
+          onRetry={() => start(reactRoot)}
         />,
       );
     });
@@ -123,7 +89,7 @@ function Startup({
 }: {
   readonly error?: boolean;
   readonly message: string;
-  readonly onRetry?: (token: string) => void;
+  readonly onRetry?: () => void;
 }) {
   return (
     <main
@@ -137,61 +103,10 @@ function Startup({
         <pre>{message}</pre>
       </div>
       {onRetry === undefined ? null : (
-        <CredentialForm
-          onSubmit={(token) => {
-            storeCredential(token);
-            onRetry(token);
-          }}
-        />
+        <button type="button" onClick={onRetry}>
+          Try again
+        </button>
       )}
     </main>
-  );
-}
-
-function CredentialPrompt({
-  onSubmit,
-}: {
-  readonly onSubmit: (token: string) => void;
-}) {
-  return (
-    <main className="encounter-startup">
-      <h1>Encounter workbench</h1>
-      <p>
-        A domain-neutral application compiled from shared ontology concepts and
-        generated into a Go service. Enter the demo credential to sign in.
-      </p>
-      <CredentialForm onSubmit={onSubmit} />
-      <p>
-        The browser conformance harness is at <a href="uat.html">uat.html</a>.
-      </p>
-    </main>
-  );
-}
-
-function CredentialForm({
-  onSubmit,
-}: {
-  readonly onSubmit: (token: string) => void;
-}) {
-  const [value, setValue] = useState("");
-  return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (value !== "") onSubmit(value);
-      }}
-    >
-      <label>
-        Demo credential
-        <br />
-        <input
-          type="password"
-          autoComplete="off"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-        />
-      </label>
-      <button type="submit">Sign in</button>
-    </form>
   );
 }
